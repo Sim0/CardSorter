@@ -19,7 +19,7 @@ Récupérer le code source
   > cd CardSorter/
 
 Créer le fichier parameters.yml du projet symfony
-  > cp app/config/parameters.dist.yml app/config/parameters.yml
+  > cp app/config/parameters.yml.dist app/config/parameters.yml
 
 Lancer le serveur PHP (PHP built-in web server) par défaut sur http://127.0.0.1:8000
   > php bin/console server:run --env=prod
