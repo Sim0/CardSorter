@@ -1,41 +1,90 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-    Cards Sorter
-{% endblock %}
+{% block title %}Cards Sorter{% endblock %}
 
 {% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/prism.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">Cards</li>
+                <li class="breadcrumb-item active" aria-current="page">Exercise</li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="#">{{ OriginalResponse.exerciceId }}</a></li>
+            </ol>
+        </nav>
+        <div class="col-md-12 col-sm-12">
+            <div class="card row border-secondary mb-3">
+                <div class="card-header bg-secondary text-white">Original Response :</div>
+                <div class="card-body text-primary">
+                    <h5 class="card-title">Json :</h5>
+                    <p class="card-text row">
+                    <div class="col-sm-12 col-md-3">
+                        <span></span>
+                    </div>
+                    <div class="col-sm-12 col-md-9" id="response-json">
+                        <code class="text-muted">
+
+                        </code>
+                    </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="card border-primary mb-3">
+                    <div class="card-header bg-primary text-white">Challenge :</div>
+                    <div class="card-body text-primary">
+                        <h5 class="card-title">Json :</h5>
+                        <p class="card-text">
+                        <div id="challenge-json" class="">
+                            <code class="text-muted">
+
+                            </code>
+                        </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="card border-info mb-3">
+                    <div class="card-header bg-info text-white">Solution :</div>
+                    <div class="card-body text-primary">
+                        <h5 class="card-title">Json :</h5>
+                        <p class="card-text">
+                        <div id="solution-json">
+                            <code class="text-muted">
+
+                            </code>
+                        </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                {{ render(controller(
+                'AppBundle\\Controller\\DefaultController::testSortingAction',
+                { 'data': solution, 'exerciseId' : OriginalResponse.exerciceId }
+                )) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
     <script src="{{ asset('assets/js/jquery.slim.3.0.0.min.js') }}"></script>
     <script src="{{ asset('assets/js/popper.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-{% endblock %}
-
-{% block body %}
-    <script src="{{ asset('assets/js/prism.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery.slim.3.0.0.min.js') }}"></script>
-    <script src="{{ asset('assets/js/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script>
         $(document).ready(function () {
-            Prism.plugins.NormalizeWhitespace.setDefaults({
-                'remove-trailing': true,
-                'remove-indent': true,
-                'left-trim': true,
-                'right-trim': true,
-                'break-lines': 80,
-                'indent': 2,
-                'remove-initial-line-feed': false,
-                'tabs-to-spaces': 4,
-                'spaces-to-tabs': 4
-            });
-
-            var challenge = '{{ OriginalResponse | raw  }}';
-            var result = '{{ result | json_encode | raw }}';
+            var response = '{{ OriginalResponse | json_encode | raw  }}';
+            var challenge = '{{ OriginalResponse.data | json_encode | raw  }}';
+            var solution = '{{ solution | json_encode | raw }}';
 
             function syntaxHighlight(json) {
                 if (typeof json != 'string') {
@@ -58,63 +107,9 @@
                     return '<span class="' + cls + '">' + match + '</span>';
                 });
             }
-
+            $('#response-json code').html(syntaxHighlight(response));
             $('#challenge-json code').html(syntaxHighlight(challenge));
-            $('#result-json code').html(syntaxHighlight(result))
+            $('#solution-json code').html(syntaxHighlight(solution));
         })
-
     </script>
-    <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">Cards</li>
-                <li class="breadcrumb-item active" aria-current="page">Exercise</li>
-                <li class="breadcrumb-item active" aria-current="page"><a href="#">{{ exerciseId }}</a></li>
-            </ol>
-        </nav>
-        <div class="row well">
-            <div class="col-md-6 col-sm-12">
-                <div class="card bg-light mb-3">
-                    <div class="card-header">Challenge :</div>
-                    <div class="card-body text-primary">
-                        <h5 class="card-title">Json :</h5>
-
-                        <p class="card-text">
-
-                        <div id="challenge-json" class="">
-                            <code class="text-muted">
-
-                            </code>
-                        </div>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-12">
-                <div class="card bg-light mb-3">
-                    <div class="card-header">Solution :</div>
-                    <div class="card-body text-primary">
-                        <h5 class="card-title">Json :</h5>
-
-                        <p class="card-text">
-
-                        <div id="result-json">
-                            <code class="text-muted">
-
-                            </code>
-                        </div>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                {{ render(controller(
-                'AppBundle\\Controller\\DefaultController::testSortingAction',
-                { 'data': result, 'exerciseId' : exerciseId }
-                )) }}
-            </div>
-        </div>
-    </div>
 {% endblock %}

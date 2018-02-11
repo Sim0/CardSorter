@@ -31,46 +31,32 @@ class DefaultController extends Controller
         $apiResponse = $guzzleClient->get($this->getParameter('card_api'));
         $formattedResponse = (new CardResponseFormatter())->transform($apiResponse);
 
-        try {
-
-            if (null === $formattedResponse) {
-                return;
-            }
-
-            $cardBox = CardBoxFactory::create($formattedResponse->cards);
-            $cardBoxSorter = (new CardBoxSorter($cardBox, new CardComparer($formattedResponse->categoryOrder, $formattedResponse->valueOrder)));
-            $cardBoxSorter->sort();
-            $result = $formattedResponse->reverseTransform($cardBoxSorter->getCardBox());
-
-
-        } catch (\Exception $e) {
-
+        //Invalid Response Format
+        if (null === $formattedResponse) {
+            return $this->render('cards/error.html.twig');
         }
-        $form = $this->createForm(ResultType::class, null, ['data' => ['result_data' => serialize($result)]]);
+        //sorting card as an array of object (CardBox) by a sorter (CardBoxSorter)
+        $cardBox = CardBoxFactory::create($formattedResponse->cards);
+        $cardBoxSorter = (new CardBoxSorter($cardBox,
+            new CardComparer($formattedResponse->categoryOrder,
+                $formattedResponse->valueOrder)));
+        $cardBoxSorter->sort();
+
 
         return $this->render('cards/index.html.twig',
-            ['exerciseId' => $formattedResponse->exerciseId,
-                'challenge' => $formattedResponse->cards,
-                'categoryOrder' => $formattedResponse->categoryOrder,
-                'valueOrder' => $formattedResponse->valueOrder,
-                'OriginalResponse' => $apiResponse,
-                'result' => $formattedResponse->reverseTransform($cardBoxSorter->getCardBox()),
-                'form' => $form->createView()]
+            ['OriginalResponse' => json_decode($apiResponse, TRUE),
+                'solution' => $formattedResponse->reverseTransform($cardBoxSorter->getCardBox())]
         );
     }
 
     public function testSortingAction(Request $request, $exerciseId, $data)
     {
-        try {
-            $testResult = $this->get('guzzle.client.adatper')->post($this->getParameter('test_api') . $exerciseId, [
-                RequestOptions::JSON => $data]);
-            $status = $testResult->getStatusCode();
+        $testResult = $this->get('guzzle.client.adatper')
+            ->post(sprintf($this->getParameter('test_api'), $exerciseId), [RequestOptions::JSON => $data]);
 
-        } catch (ServerException $e) {
-
-        }
-        return $this->render(
-            'cards/test.html.twig', ['exerciseId' => $exerciseId, 'status' => $status]
+        return $this->render('cards/result.html.twig',
+            ['exerciseId' => $exerciseId,
+                'status' => $testResult->getStatusCode()]
         );
     }
 }
