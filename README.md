@@ -1,7 +1,7 @@
 CardsSorter App
 ===============
 
-Implementation de la solution à un exercice de tri de carte en symfony.  
+Solution d'un exercice de tri de carte en symfony.  
 Le tri se fait sur un jeu de carte (10) en respectant un ordre de valeurs et un ordre de couleurs donnés.  
 
 Pré-requis:
@@ -18,7 +18,7 @@ Récupérer le code
   > git clone git@github.com:Sim0/CardSorter.git
   > cd CardSorter/
 
-Créer parameters.yml du projet symfony  
+Créer parameters.yml du projet symfony
   > cp app/config/parameters.dist.yml app/config/parameters.yml
 
 Lancer le serveur PHP (PHP built-in web server) par défaut sur http://127.0.0.1:8000
