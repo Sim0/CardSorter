@@ -1,0 +1,11 @@
+services:
+   GuzzleHttp\Client:
+      public: false
+
+   AppBundle\Adapter\GuzzleAdapter:
+       arguments: [GuzzleHttp\Client]
+       public: false
+
+   guzzle.client.adatper:
+       alias: AppBundle\Adapter\GuzzleAdapter
+       public: true

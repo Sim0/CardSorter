@@ -1,0 +1,3 @@
+parameters:
+   card_api: https://recrutement.local-trust.com/test/cards/57187b7c975adeb8520a283c
+   test_api: https://recrutement.local-trust.com/test/
