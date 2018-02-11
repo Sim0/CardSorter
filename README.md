@@ -14,17 +14,17 @@ Pré-requis de GuzzleHttp : http://docs.guzzlephp.org/en/stable/overview.html#re
 
 Utilisation:
 ============
-Récupérer le code
-  > git clone git@github.com:Sim0/CardSorter.git
+Récupérer le code source
+  > git clone git@github.com:Sim0/CardSorter.git  
   > cd CardSorter/
 
-Créer parameters.yml du projet symfony
+Créer le fichier parameters.yml du projet symfony
   > cp app/config/parameters.dist.yml app/config/parameters.yml
 
 Lancer le serveur PHP (PHP built-in web server) par défaut sur http://127.0.0.1:8000
   > php bin/console server:run --env=prod
 
-La page / affiche 4 blocks:
+La page [/]() affiche 4 blocks:
   - Original Response : La réponse originale récupérée via la méthode GET.
   - Challenge : Les cartes non triées avec les ordres value et category.
   - Solution : Les cartes triées par l'application.
