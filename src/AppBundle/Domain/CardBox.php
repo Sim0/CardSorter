@@ -8,7 +8,10 @@
 
 namespace AppBundle\Domain;
 
-
+/**
+ * Class CardBox
+ * @package AppBundle\Domain
+ */
 class CardBox extends \ArrayObject
 {
     /**
@@ -30,6 +33,5 @@ class CardBox extends \ArrayObject
         }
 
         return $cardBoxArray;
-
     }
 }

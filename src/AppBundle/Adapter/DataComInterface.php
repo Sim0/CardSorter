@@ -8,7 +8,10 @@
 
 namespace AppBundle\Adapter;
 
-
+/**
+ * Interface DataComInterface
+ * @package AppBundle\Adapter
+ */
 interface DataComInterface
 {
     /**
@@ -28,6 +31,5 @@ interface DataComInterface
      * @return mixed
      */
     public function post($uri, array $options = []);
-
 
 }

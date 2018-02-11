@@ -12,7 +12,6 @@ class Card
     private $value;
     private $category;
 
-
     public function __construct($value, $category)
     {
         $this->value = $value;

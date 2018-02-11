@@ -8,7 +8,6 @@
 
 namespace AppBundle\DependencyInjection;
 
-
 use Symfony\Bundle\MonologBundle\DependencyInjection\Configuration;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -25,7 +24,7 @@ class AppExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('parameters.yml');
+        $loader->load('api.yml');
         $loader->load('services.yml');
     }
 

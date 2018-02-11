@@ -26,12 +26,7 @@ class CardBoxSorter
 
     public function sort()
     {
-        return $this->cardBox->uasort(array($this->comparer , 'compare'));
-    }
-
-    public function getCardBox()
-    {
+        $this->cardBox->uasort(array($this->comparer , 'compare'));
         return $this->cardBox;
     }
-
 }

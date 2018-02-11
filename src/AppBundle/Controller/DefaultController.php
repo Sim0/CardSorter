@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\DataTransformer\CardResponseFormatter;
-use AppBundle\Form\ResultType;
 use AppBundle\Domain\CardBox;
 use AppBundle\Domain\CardBoxSorter;
 use AppBundle\Domain\CardComparer;
@@ -35,17 +34,16 @@ class DefaultController extends Controller
         if (null === $formattedResponse) {
             return $this->render('cards/error.html.twig');
         }
+
         //sorting card as an array of object (CardBox) by a sorter (CardBoxSorter)
         $cardBox = CardBoxFactory::create($formattedResponse->cards);
-        $cardBoxSorter = (new CardBoxSorter($cardBox,
-            new CardComparer($formattedResponse->categoryOrder,
-                $formattedResponse->valueOrder)));
-        $cardBoxSorter->sort();
-
+        $cardBoxSorted = (new CardBoxSorter($cardBox,
+            new CardComparer($formattedResponse->categoryOrder, $formattedResponse->valueOrder)))
+            ->sort();
 
         return $this->render('cards/index.html.twig',
             ['OriginalResponse' => json_decode($apiResponse, TRUE),
-                'solution' => $formattedResponse->reverseTransform($cardBoxSorter->getCardBox())]
+                'solution' => $formattedResponse->reverseTransform($cardBoxSorted)]
         );
     }
 

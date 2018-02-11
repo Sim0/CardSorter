@@ -8,12 +8,14 @@
 
 namespace AppBundle\Adapter;
 
-
 use GuzzleHttp\Client;
 
+/**
+ * Class GuzzleAdapter
+ * @package AppBundle\Adapter
+ */
 class GuzzleAdapter implements DataComInterface
 {
-
     private $client;
 
     public function __construct(Client $client)
@@ -29,7 +31,6 @@ class GuzzleAdapter implements DataComInterface
 
     public function post($uri, array $options = [])
     {
-        // TODO: Implement post() method.
         return $this->client->post($uri, $options);
     }
 
