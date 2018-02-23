@@ -43,8 +43,8 @@ install:
 #  - php bin/console doctrine:fixtures:load -n --env=test
 
 # Run script
-script:
-  - phpunit
+#script:
+# - phpunit
 
 # After a build, send email notification with the build results
 notifications:
