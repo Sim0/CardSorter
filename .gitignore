@@ -13,7 +13,7 @@
 /var/sessions/*
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
-!var/bootstrap.cache.php
+!var/bootstrap.php.cache
 .idea/
 .idea/*
 
