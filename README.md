@@ -8,6 +8,15 @@ Pré-requis:
 ===========
  > PHP 5.5.9 +  
  > ext-curl
+ 
+ CURL configuration : http://php.net/manual/fr/curl.configuration.php  
+ > if﻿curl.cainfo is not set a similar error while occur :  
+ ﻿Fatal error: Uncaught exception 'cURL_Exception' with message 'cURL resource: Resource id #10; cURL error: SSL certificate problem: unable to get local issuer certificate (cURL error code 60). See http://curl.haxx.se/libcurl/c/libcurl-errors.html  
+ - Use this certificate root certificate bundle:  
+ https://curl.haxx.se/ca/cacert.pem  
+ - Copy this certificate bundle on your disk. And use this on php.ini  
+ curl.cainfo = "path_to_cert\cacert.pem"  
+ (https://stackoverflow.com/questions/21114371/php-curl-error-code-60)
 
 Pré-requis de Symfony 3  : https://symfony.com/doc/3.4/reference/requirements.html  
 Pré-requis de GuzzleHttp : http://docs.guzzlephp.org/en/stable/overview.html#requirements  
